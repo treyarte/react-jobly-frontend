@@ -1,0 +1,13 @@
+.search-bar-form {
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.search-bar-form input {
+  margin-right: 1rem;
+}
+
+.search-bar-form .form-group {
+  display: flex;
+  justify-content: flex-start;
+}

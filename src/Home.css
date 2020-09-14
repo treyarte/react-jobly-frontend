@@ -1,0 +1,14 @@
+.home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 85vh;
+}
+
+.home-header {
+  color: #212529;
+  font-size: x-large;
+}
+.home p {
+  font-weight: 300;
+}

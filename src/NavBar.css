@@ -1,0 +1,38 @@
+nav {
+  border-bottom: solid 2px rgba(0, 0, 0, 0.125);
+  background-color: #ffffff;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+nav div {
+  width: 100%;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+  margin: 0 2rem 0 0;
+  padding: 0;
+}
+
+nav ul li {
+  margin: 0 3rem 0 0;
+}
+
+.link {
+  text-decoration: none;
+  color: #007bff;
+  font-size: 1.3rem;
+}
+
+.link:hover {
+  color: #025fc2;
+}
+
+.brand {
+  float: left;
+  font-size: 1.5rem;
+}
