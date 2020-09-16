@@ -13,7 +13,7 @@ class JoblyApi {
       return (
         await axios({
           method: verb,
-          url: `${BASE_URL}/${endpoint}`,
+          url: `${BASE_URL}${endpoint}`,
           [verb === 'get' ? 'params' : 'data']: paramsOrData,
         })
       ).data;
