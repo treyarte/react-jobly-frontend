@@ -1,0 +1,50 @@
+.card {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 5px 10px -10px #393e46;
+  border-radius: 0%;
+}
+
+.card-company .card:hover {
+  box-shadow: -5px 10px 15px -12px #393e46, 5px 0 10px -12px #393e46;
+}
+
+.card-company .card-body {
+  display: flex;
+  justify-content: flex-start;
+  flex-flow: row wrap;
+}
+
+.card-company .card-text {
+  width: 100%;
+  font-size: 1rem;
+  text-align: start;
+  margin-top: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.card-company .card-title {
+  font-size: 1.2rem;
+  font-weight: 500;
+  width: 92%;
+  text-align: start;
+
+  margin-bottom: 1rem;
+}
+
+.card-company .card-body span {
+  width: 8%;
+}
+
+.card-company .card-img {
+  width: 50px;
+  height: 50px;
+  text-align: end;
+}
+
+.card-link {
+  color: #000000;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}

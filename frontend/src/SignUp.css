@@ -1,0 +1,11 @@
+.sign-up {
+  text-align: left;
+}
+
+.sign-up .card-title {
+  margin: 1rem 1rem 0;
+}
+
+.sign-up .card-footer {
+  background-color: #ffffff;
+}
