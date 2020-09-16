@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Redirect } from 'react-router-dom';
 import JoblyAPI from './JoblyAPI';
 import JobCard from './JobCard';
 import './Company.css';
 
-const Company = () => {
+const Company = ({ checkLogin }) => {
   const { handle } = useParams();
   const [company, setCompany] = useState({});
 
@@ -18,7 +18,9 @@ const Company = () => {
       }));
     }
     getCompany(handle);
-  }, []);
+  }, [setCompany, handle]);
+
+  if (!checkLogin()) return <Redirect to='/login' />;
 
   const { name, description, jobs } = company;
 

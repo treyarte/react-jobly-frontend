@@ -1,0 +1,11 @@
+.login {
+  text-align: start;
+}
+.login .card-title {
+  margin: 1rem 1rem;
+}
+
+.login-form .card-footer {
+  text-align: end;
+  background-color: #ffffff;
+}

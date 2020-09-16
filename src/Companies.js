@@ -3,13 +3,14 @@ import SearchBar from './SearchBar';
 import CompanyCard from './CompanyCard';
 import JoblyAPI from './JoblyAPI';
 import './Companies.css';
+import { Redirect } from 'react-router-dom';
 
-const Companies = () => {
+const Companies = ({ checkLogin }) => {
   const [companies, setCompanies] = useState([]);
 
   const handleSetCompanies = async (searchParams) => {
     const companyArr = await JoblyAPI.getCompanies(searchParams);
-    console.log(companyArr);
+
     setCompanies(companyArr);
   };
 
@@ -22,6 +23,7 @@ const Companies = () => {
     getCompanies();
   }, []);
 
+  if (!checkLogin()) return <Redirect to='/login' />;
   return (
     <>
       <div className='companies col-md-8 offset-md-2'>

@@ -1,9 +1,27 @@
-import React from 'react';
-
+import React, { useState, useEffect } from 'react';
+import JoblyAPI from './JoblyAPI';
 import './JobCard.css';
-import { Card, CardBody, CardTitle, CardText, Button } from 'reactstrap';
+import ApplyButton from './ApplyButton';
+import { Card, CardBody, CardTitle, CardText, Spinner } from 'reactstrap';
 
 const JobCard = ({ job }) => {
+  const [toggle, setToggle] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function getUserJobs() {
+      const jobs = await JoblyAPI.getUserJobs();
+      const userJob = jobs.some((j) => {
+        return j.id === job.id;
+      });
+
+      if (userJob && !toggle) {
+        setToggle(true);
+      }
+    }
+    getUserJobs();
+    setLoading(false);
+  }, [setToggle, setLoading, job.id, toggle]);
   return (
     <>
       <div className='job-card'>
@@ -21,7 +39,17 @@ const JobCard = ({ job }) => {
               </li>
             </ul>
             <div className='apply-btn-container'>
-              <Button className='btn btn-danger'>Apply</Button>
+              {loading ? (
+                <div>
+                  <Spinner color='dark' />
+                </div>
+              ) : (
+                <ApplyButton
+                  id={job.id}
+                  toggle={toggle}
+                  setToggle={setToggle}
+                />
+              )}
             </div>
           </CardBody>
         </Card>

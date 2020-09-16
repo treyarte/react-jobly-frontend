@@ -1,10 +1,10 @@
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 class JoblyApi {
   static async request(endpoint, paramsOrData = {}, verb = 'get') {
-    paramsOrData._token = // for now, hardcode token for "testing"
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc' +
-      '3RpbmciLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTU1MzcwMzE1M30.' +
-      'COmFETEsTxN_VfIlgIKw0bYJLkvbRQNgO1XCSE8NZ0U';
+    paramsOrData._token = JSON.parse(
+      window.localStorage.getItem('token')
+    ).token;
 
     console.debug('API Call:', endpoint, paramsOrData, verb);
 
@@ -37,9 +37,37 @@ class JoblyApi {
     return res.companies;
   }
 
-  static async getJobs() {
-    let res = await this.request('jobs');
-    return res.companies;
+  static async getJobs(params = '') {
+    let res = await this.request('jobs', { search: params });
+    return res.jobs;
+  }
+
+  static async login(username, password) {
+    let res = await this.request('login', { username, password }, 'post');
+    return res.token;
+  }
+  static async signUp(signUpData) {
+    let res = await this.request('users', signUpData, 'post');
+    return res.token;
+  }
+
+  static async updateUser(token, formData) {
+    const { username } = jwt_decode(token);
+    let res = await this.request(`users/${username}`, formData, 'patch');
+    return res.user;
+  }
+
+  static async applyToJob(job_id) {
+    let res = await this.request(`jobs/${job_id}/apply`, {}, 'post');
+    return res.data;
+  }
+
+  static async getUserJobs() {
+    const token = JSON.parse(window.localStorage.getItem('token')).token;
+
+    const { username } = jwt_decode(token);
+    let res = await this.request(`users/${username}`, {}, 'get');
+    return res.user.jobs;
   }
 }
 

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import CustomAlert from './CustomAlert';
 import useForm from './hooks/useForm';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import JoblyAPI from './JoblyAPI';
-import jwt_decode from 'jwt-decode';
 import './SignUp.css';
 import {
   Form,
@@ -17,48 +16,68 @@ import {
   CardFooter,
 } from 'reactstrap';
 
-const Profile = ({ checkLogin, token }) => {
+const SignUp = ({ handleToken, checkLogin }) => {
   const INITIAL_STATE = {
+    username: '',
     password: '',
     first_name: '',
     last_name: '',
     email: '',
   };
-  const [errors, setErrors] = useState(new Set());
-  const [formData, handleChange] = useForm(INITIAL_STATE);
+
   const history = useHistory();
 
-  if (!checkLogin()) return <Redirect to='/login' />;
+  const [errors, setErrors] = useState(new Set());
+  const [formData, handleChange] = useForm(INITIAL_STATE);
 
-  const { username } = jwt_decode(token.token);
+  if (checkLogin()) return <Redirect to='/' />;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await JoblyAPI.updateUser(token.token, formData);
+      const token = await JoblyAPI.signUp(formData);
+
+      handleToken(token);
 
       history.push('/');
     } catch (error) {
-      console.log(error);
       setErrors((e) => new Set([...errors, ...error]));
     }
   };
-
   return (
     <>
       <div className='col-md-4 offset-md-4'>
         {errors.size > 0 && <CustomAlert data={errors} type='danger' />}
         <Card className='sign-up'>
           <CardTitle>
-            <h4>Update</h4>
+            <h4>Sign Up</h4>
           </CardTitle>
           <Form className='sign-up-form' onSubmit={handleSubmit}>
             <CardBody>
               <FormGroup>
-                <Label for='username'>{username}</Label>
+                <Label for='username'>Username</Label>
+                <Input
+                  type='text'
+                  name='username'
+                  id='username'
+                  placeholder='username'
+                  value={formData.username}
+                  onChange={handleChange}
+                />
               </FormGroup>
+              <FormGroup>
+                <Label for='password'>Password</Label>
 
+                <Input
+                  type='password'
+                  name='password'
+                  id='password'
+                  placeholder='password'
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+              </FormGroup>
               <FormGroup>
                 <Label for='first_name'>First Name</Label>
 
@@ -95,18 +114,6 @@ const Profile = ({ checkLogin, token }) => {
                   onChange={handleChange}
                 />
               </FormGroup>
-              <FormGroup>
-                <Label for='password'>Re-Enter Password</Label>
-
-                <Input
-                  type='password'
-                  name='password'
-                  id='password'
-                  placeholder='password'
-                  value={formData.password}
-                  onChange={handleChange}
-                />
-              </FormGroup>
             </CardBody>
             <CardFooter>
               <Button color='success'>Sign Up</Button>
@@ -118,4 +125,4 @@ const Profile = ({ checkLogin, token }) => {
   );
 };
 
-export default Profile;
+export default SignUp;

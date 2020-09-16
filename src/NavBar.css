@@ -32,6 +32,18 @@ nav ul li {
   color: #025fc2;
 }
 
+.logout-btn {
+  padding: 0;
+  background-color: #ffffff;
+  border: none;
+  margin: 0;
+}
+
+.logout-btn:hover {
+  background-color: #ffffff;
+  border: none;
+}
+
 .brand {
   float: left;
   font-size: 1.5rem;
